@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carteira - FF Arena</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="wallet">
+  <div id="app-root" data-title="Carteira Virtual" data-subtitle="Gerencie seu saldo e depósitos"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💰 Saldo</span>
+        </div>
+        <div id="wallet-card"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📥 Solicitar Depósito</span>
+        </div>
+        <form id="deposit-form">
+          <div class="form-group">
+            <label for="deposit-amount">Valor (R$)</label>
+            <input type="number" id="deposit-amount" class="form-control" min="5" step="0.01" placeholder="25.00" required>
+          </div>
+          <div class="form-group">
+            <label for="deposit-proof">Comprovante PIX (opcional)</label>
+            <input type="file" id="deposit-proof" class="form-control" accept="image/*">
+          </div>
+          <p class="text-muted" style="font-size:0.85rem;margin-bottom:1rem;">
+            Após enviar, um administrador aprovará seu depósito. O saldo ficará disponível na carteira.
+          </p>
+          <button type="submit" class="btn btn-primary btn-block">Solicitar Depósito</button>
+        </form>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-header">
+          <span class="card-title">📋 Histórico de Transações</span>
+        </div>
+        <div id="transactions-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

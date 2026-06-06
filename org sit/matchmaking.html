@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matchmaking - Paraíba Apostas</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="matchmaking">
+  <div id="app-root" data-title="Matchmaking" data-subtitle="Encontre adversários automaticamente"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎯 Buscar Partida</span>
+        </div>
+        <form id="matchmaking-form">
+          <div class="form-group">
+            <label for="mm-amount">Valor da aposta (R$)</label>
+            <input type="number" id="mm-amount" class="form-control" min="1" step="0.01" value="5" required>
+          </div>
+          <div class="form-group">
+            <label for="mm-mode">Modo de jogo</label>
+            <select id="mm-mode" class="form-control">
+              <option value="1x1">1x1</option>
+              <option value="2x2">2x2</option>
+              <option value="4x4">4x4</option>
+              <option value="squad">Squad</option>
+            </select>
+          </div>
+          <p class="queue-info" id="queue-count">0 jogador(es) na fila</p>
+          <button type="submit" class="btn btn-primary btn-block">Procurar Adversário</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div id="matchmaking-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/matchmaking.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

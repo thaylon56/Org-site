@@ -1,0 +1,10 @@
+{
+  "name": "paraiba-apostas",
+  "version": "1.0.0",
+  "description": "Paraíba Apostas - Plataforma de apostas organizadas de Free Fire",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "npx serve ."
+  },
+  "private": true
+}

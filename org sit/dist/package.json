@@ -1,0 +1,10 @@
+{
+  "name": "ff-arena",
+  "version": "1.0.0",
+  "description": "Plataforma de apostas organizadas de Free Fire",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "npx serve ."
+  },
+  "private": true
+}

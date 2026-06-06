@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - FF Arena</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="auth">
+  <div class="landing">
+    <nav class="landing-nav">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔥</div>
+        <span>FF Arena</span>
+      </a>
+      <a href="index.html" class="btn btn-outline btn-sm">Já tenho conta</a>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content" style="grid-template-columns: 1fr; max-width: 480px;">
+        <div class="auth-card fade-in">
+          <h2>Criar Conta</h2>
+          <p class="auth-subtitle">Junte-se à arena de apostas</p>
+          <form id="register-form">
+            <div class="form-group">
+              <label for="reg-display">Nome de exibição</label>
+              <input type="text" id="reg-display" class="form-control" placeholder="Seu nome" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-username">Username</label>
+              <input type="text" id="reg-username" class="form-control" placeholder="jogador_ff" required pattern="[a-zA-Z0-9_]+">
+            </div>
+            <div class="form-group">
+              <label for="reg-ffid">ID Free Fire</label>
+              <input type="text" id="reg-ffid" class="form-control" placeholder="123456789">
+            </div>
+            <div class="form-group">
+              <label for="reg-email">E-mail</label>
+              <input type="email" id="reg-email" class="form-control" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Senha</label>
+              <input type="password" id="reg-password" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Criar Conta</button>
+          </form>
+          <p class="auth-switch">Já tem conta? <a href="index.html">Fazer login</a></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

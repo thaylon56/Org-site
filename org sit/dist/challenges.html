@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafios - FF Arena</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="challenges">
+  <div id="app-root" data-title="Desafios" data-subtitle="Crie ou aceite apostas com Casa Segura"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div class="casa-segura-info">
+      <span>🛡️</span>
+      <div>
+        <strong>Intermediação automática:</strong> Ao aceitar, R$ de ambos ficam retidos.
+        Vencedor recebe o pote menos 10% de taxa. Cashback de 2% para cada jogador.
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">➕ Criar Desafio</span>
+        </div>
+        <form id="create-challenge-form">
+          <div class="form-group">
+            <label for="challenge-amount">Valor da aposta (R$)</label>
+            <input type="number" id="challenge-amount" class="form-control" min="1" step="0.01" placeholder="10.00" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="challenge-mode">Modo</label>
+              <select id="challenge-mode" class="form-control">
+                <option value="1x1">1x1</option>
+                <option value="2x2">2x2</option>
+                <option value="4x4">4x4</option>
+                <option value="squad">Squad</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="challenge-time">Horário (opcional)</label>
+              <input type="datetime-local" id="challenge-time" class="form-control">
+            </div>
+          </div>
+          <div id="prize-preview" class="challenge-prize" style="margin-bottom:1rem;">
+            <span>🏆 Prêmio estimado: —</span>
+            <span class="text-muted">Taxa: —</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Criar Desafio</button>
+        </form>
+      </div>
+
+      <div class="card" style="display:flex;align-items:center;justify-content:center;text-align:center;">
+        <div>
+          <div style="font-size:3rem;margin-bottom:1rem;">🎯</div>
+          <h3>Matchmaking Rápido</h3>
+          <p class="text-muted" style="margin:0.75rem 0 1.25rem;font-size:0.9rem;">Encontre adversários automaticamente</p>
+          <a href="matchmaking.html" class="btn btn-outline">Ir para Matchmaking</a>
+        </div>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-header">
+          <span class="card-title">⚔️ Desafios Disponíveis</span>
+        </div>
+        <div id="challenges-list" class="challenges-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById('challenge-amount')?.addEventListener('input', (e) => {
+      const amount = parseFloat(e.target.value) || 0;
+      const preview = document.getElementById('prize-preview');
+      if (amount > 0) {
+        const { prize, fee } = Challenges.calcPrize(amount);
+        preview.innerHTML = `<span>🏆 Prêmio: ${Utils.formatCurrency(prize)}</span><span class="text-muted">Taxa: ${Utils.formatCurrency(fee)}</span>`;
+      }
+    });
+  </script>
+</body>
+</html>

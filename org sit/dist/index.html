@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FF Arena - Plataforma de apostas organizadas de Free Fire com Casa Segura">
+  <title>FF Arena - Apostas Free Fire</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="landing">
+  <div class="landing">
+    <nav class="landing-nav">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🔥</div>
+        <span>FF Arena</span>
+      </a>
+      <a href="register.html" class="btn btn-outline btn-sm">Criar Conta</a>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text fade-in">
+          <h1>Apostas Free Fire com Casa Segura</h1>
+          <p>A plataforma que transforma desafios em apostas organizadas. Seu saldo fica protegido, o vencedor recebe automaticamente e você nunca mais precisa mandar PIX toda hora.</p>
+
+          <div class="hero-features">
+            <div class="hero-feature">💰 Carteira Virtual</div>
+            <div class="hero-feature">🛡️ Casa Segura</div>
+            <div class="hero-feature">🎯 Matchmaking</div>
+            <div class="hero-feature">🎁 Cashback 2%</div>
+            <div class="hero-feature">⭐ Reputação</div>
+            <div class="hero-feature">🎥 Provas</div>
+          </div>
+        </div>
+
+        <div class="auth-card fade-in">
+          <h2>Entrar</h2>
+          <p class="auth-subtitle">Acesse sua conta para apostar</p>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Senha</label>
+              <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Entrar na Arena</button>
+          </form>
+          <p class="auth-switch">Não tem conta? <a href="register.html">Criar conta grátis</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <h2 class="text-center" style="margin-bottom: 2rem;">Como Funciona a Casa Segura</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">1️⃣</div>
+          <h3>Deposite Saldo</h3>
+          <p>Adicione saldo na carteira virtual. Sem PIX a cada partida.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">2️⃣</div>
+          <h3>Crie ou Aceite</h3>
+          <p>Desafios 1x1, 2x2 e mais. O valor fica bloqueado automaticamente.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">3️⃣</div>
+          <h3>Jogue a Partida</h3>
+          <p>Os dois confirmam. O dinheiro fica retido pelo site.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">4️⃣</div>
+          <h3>Vencedor Recebe</h3>
+          <p>Aposta R$10 vs R$10 → Vencedor leva R$18. Taxa de 10% para a org.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <p>FF Arena &copy; 2026 — Plataforma de apostas organizadas de Free Fire</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

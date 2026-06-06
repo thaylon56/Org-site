@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Paraíba Apostas</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="dashboard">
+  <div id="app-root" data-title="Dashboard" data-subtitle="Bem-vindo à Paraíba Apostas"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div class="casa-segura-info">
+      <span>💎</span>
+      <div>
+        <strong>Casa Segura ativa</strong> — Seu saldo fica protegido em cada aposta.
+        Taxa de 10% · Cashback de 2% em cada partida.
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💰 Carteira</span>
+          <a href="wallet.html" class="btn btn-ghost btn-sm">Ver tudo</a>
+        </div>
+        <div id="wallet-card"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⭐ Confiança</span>
+        </div>
+        <div id="trust-mini" class="trust-mini"></div>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-header">
+          <span class="card-title">⚔️ Desafios Ativos</span>
+          <a href="challenges.html" class="btn btn-primary btn-sm">+ Novo Desafio</a>
+        </div>
+        <div id="active-challenges" class="challenges-grid"></div>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-header">
+          <span class="card-title">📊 Suas Estatísticas</span>
+          <a href="stats.html" class="btn btn-ghost btn-sm">Detalhes</a>
+        </div>
+        <div id="dashboard-stats" class="stats-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
