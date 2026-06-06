@@ -56,9 +56,16 @@ Isso adiciona: nick de ADM, chave PIX, escolha de ADM no depósito e sistema de 
 
 1. Vá em **Authentication** → **Providers**
 2. Certifique-se de que **Email** está habilitado
-3. Em **Authentication** → **Settings**:
-   - **Site URL**: `https://seu-dominio.vercel.app` (ou `http://localhost:3000` para dev)
-   - **Redirect URLs**: adicione sua URL de produção e `http://localhost:3000/**`
+3. Em **Authentication** → **URL Configuration**:
+   - **Site URL**: `https://seu-dominio.vercel.app` (produção) ou `http://localhost:3000` (dev)
+   - **Redirect URLs** — adicione todas estas:
+     ```
+     http://localhost:3000/verify-email.html
+     http://localhost:3000/**
+     https://seu-dominio.vercel.app/verify-email.html
+     https://seu-dominio.vercel.app/**
+     ```
+   > O link de confirmação de e-mail redireciona para `verify-email.html`, que exibe a mensagem de sucesso.
 
 ### 2.2 Configurar confirmação de e-mail (opcional)
 

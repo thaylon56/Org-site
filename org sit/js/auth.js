@@ -15,10 +15,13 @@ const Auth = {
     const sb = getSupabase();
     if (!sb) throw new Error('Supabase não configurado');
 
+    const redirectTo = `${window.location.origin}/verify-email.html`;
+
     const { data, error } = await sb.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: redirectTo,
         data: { username, display_name: displayName, ff_id: ffId }
       }
     });
@@ -108,6 +111,105 @@ const Auth = {
           Utils.showLoading(false);
         }
       });
+    }
+  },
+
+  /**
+   * Processa retorno do link de verificação de e-mail (Supabase Auth)
+   */
+  async handleEmailCallback() {
+    const sb = getSupabase();
+    if (!sb) return { status: 'error', message: 'Supabase não configurado' };
+
+    const hash = window.location.hash.startsWith('#')
+      ? window.location.hash.substring(1) : '';
+    const hashParams = new URLSearchParams(hash);
+    const queryParams = new URLSearchParams(window.location.search);
+
+    // Fluxo PKCE (?code=...)
+    const code = queryParams.get('code');
+    if (code) {
+      const { error } = await sb.auth.exchangeCodeForSession(code);
+      if (error) {
+        return this._mapVerifyError(error.message, hashParams.get('error_code'));
+      }
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return { status: 'success', message: 'E-mail verificado com sucesso!' };
+    }
+
+    const authError = hashParams.get('error');
+    const errorCode = hashParams.get('error_code');
+    const accessToken = hashParams.get('access_token');
+    const type = hashParams.get('type');
+
+    // Link com token válido — Supabase processa automaticamente
+    if (accessToken) {
+      await new Promise((r) => setTimeout(r, 600));
+      const { data: { session } } = await sb.auth.getSession();
+      window.history.replaceState({}, document.title, window.location.pathname);
+      if (session) {
+        return { status: 'success', message: 'E-mail verificado com sucesso!' };
+      }
+    }
+
+    // Erro no hash (ex: link expirado ou já usado)
+    if (authError) {
+      const { data: { session } } = await sb.auth.getSession();
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // Link já usado mas conta já verificada / sessão ativa
+      if (session) {
+        return { status: 'success', message: 'E-mail verificado com sucesso!' };
+      }
+
+      return this._mapVerifyError(
+        decodeURIComponent((hashParams.get('error_description') || '').replace(/\+/g, ' ')),
+        errorCode
+      );
+    }
+
+    // Tentativa final: sessão já criada pelo detectSessionInUrl
+    await new Promise((r) => setTimeout(r, 400));
+    const { data: { session } } = await sb.auth.getSession();
+    if (session && (type === 'signup' || type === 'email' || type === 'recovery')) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return { status: 'success', message: 'E-mail verificado com sucesso!' };
+    }
+
+    return null;
+  },
+
+  _mapVerifyError(description, errorCode) {
+    if (errorCode === 'otp_expired') {
+      return {
+        status: 'info',
+        title: 'Link expirado ou já utilizado',
+        message: 'Seu e-mail provavelmente já foi confirmado. Faça login com seu e-mail e senha para entrar.'
+      };
+    }
+    return {
+      status: 'error',
+      message: description || 'Não foi possível verificar o e-mail. Tente solicitar um novo link.'
+    };
+  },
+
+  /** Redireciona callbacks de auth que caírem em outras páginas */
+  redirectAuthCallbackIfNeeded() {
+    const hash = window.location.hash;
+    const search = window.location.search;
+    const isVerifyPage = window.location.pathname.endsWith('verify-email.html');
+    if (isVerifyPage) return;
+
+    const hasAuthHash = hash && (
+      hash.includes('access_token') ||
+      hash.includes('error=') ||
+      hash.includes('type=signup') ||
+      hash.includes('type=email')
+    );
+    const hasAuthQuery = search && search.includes('code=');
+
+    if (hasAuthHash || hasAuthQuery) {
+      window.location.replace(`verify-email.html${search}${hash}`);
     }
   },
 

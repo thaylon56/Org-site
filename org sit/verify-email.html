@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de E-mail - Paraíba Apostas</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="verify">
+  <div class="brand-strip">Apostas organizadas · Casa Segura · Free Fire</div>
+  <div class="landing verify-page">
+    <nav class="landing-nav">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Paraíba Apostas" class="logo-img">
+      </a>
+    </nav>
+
+    <section class="hero verify-hero">
+      <div class="verify-card fade-in" id="verify-card">
+        <div class="verify-loading" id="verify-loading">
+          <div class="spinner" style="margin:0 auto 1.25rem;"></div>
+          <h2>Verificando seu e-mail...</h2>
+          <p class="text-muted">Aguarde um momento</p>
+        </div>
+
+        <div class="verify-result verify-success" id="verify-success" hidden>
+          <div class="verify-icon">✅</div>
+          <h2>E-mail verificado com sucesso!</h2>
+          <p>Sua conta está ativa. Agora você pode entrar e começar a apostar na Paraíba Apostas.</p>
+          <a href="dashboard.html" class="btn btn-primary btn-block" id="verify-go-dashboard">Ir para o painel</a>
+          <a href="index.html" class="btn btn-ghost btn-block">Fazer login</a>
+        </div>
+
+        <div class="verify-result verify-info" id="verify-info" hidden>
+          <div class="verify-icon">ℹ️</div>
+          <h2 id="verify-info-title">Link já utilizado</h2>
+          <p id="verify-info-text">Se você já confirmou seu e-mail, basta fazer login normalmente.</p>
+          <a href="index.html" class="btn btn-primary btn-block">Ir para o login</a>
+        </div>
+
+        <div class="verify-result verify-error" id="verify-error" hidden>
+          <div class="verify-icon">❌</div>
+          <h2>Não foi possível verificar</h2>
+          <p id="verify-error-text">Ocorreu um erro ao verificar seu e-mail.</p>
+          <a href="register.html" class="btn btn-outline btn-block">Criar nova conta</a>
+          <a href="index.html" class="btn btn-ghost btn-block">Voltar ao login</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const loading = document.getElementById('verify-loading');
+      const success = document.getElementById('verify-success');
+      const info = document.getElementById('verify-info');
+      const error = document.getElementById('verify-error');
+
+      function show(el) {
+        [loading, success, info, error].forEach(node => node.hidden = node !== el);
+      }
+
+      try {
+        const result = await Auth.handleEmailCallback();
+
+        if (result?.status === 'success') {
+          show(success);
+          // Se logou automaticamente, dashboard funciona direto
+          const session = await Auth.getCurrentUser();
+          if (!session) {
+            document.getElementById('verify-go-dashboard').style.display = 'none';
+          }
+          return;
+        }
+
+        if (result?.status === 'info') {
+          document.getElementById('verify-info-title').textContent = result.title || 'Tudo certo!';
+          document.getElementById('verify-info-text').textContent = result.message;
+          show(info);
+          return;
+        }
+
+        if (result?.status === 'error') {
+          document.getElementById('verify-error-text').textContent = result.message;
+          show(error);
+          return;
+        }
+
+        // Sem parâmetros na URL — página acessada diretamente
+        document.getElementById('verify-info-title').textContent = 'Verificação de e-mail';
+        document.getElementById('verify-info-text').textContent =
+          'Acesse o link enviado no seu e-mail ou faça login se já confirmou sua conta.';
+        show(info);
+      } catch (err) {
+        document.getElementById('verify-error-text').textContent = err.message || 'Erro inesperado';
+        show(error);
+      }
+    });
+  </script>
+</body>
+</html>

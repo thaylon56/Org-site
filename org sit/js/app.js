@@ -124,6 +124,7 @@ const App = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  Auth.redirectAuthCallbackIfNeeded();
   Auth.initAuthForms();
   if (document.getElementById('app-root')) Layout.render();
   App.initPage();
