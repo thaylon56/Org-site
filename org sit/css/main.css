@@ -952,6 +952,122 @@ select.form-control { cursor: pointer; }
 .admin-item-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .dispute-reason { color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; }
 
+.admin-panel-hint { font-size: 0.9rem; margin-bottom: 1.25rem; padding: 0.75rem 1rem; background: rgba(255, 140, 0, 0.08); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-orange); }
+
+.admin-profile-status { padding: 0.75rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.9rem; }
+.admin-profile-status.ok { background: rgba(0, 230, 118, 0.1); border: 1px solid rgba(0, 230, 118, 0.3); color: var(--accent-green); }
+.admin-profile-status.warn { background: rgba(255, 140, 0, 0.1); border: 1px solid rgba(255, 140, 0, 0.3); color: var(--accent-orange); }
+
+.admin-settings-form { max-width: 560px; }
+.field-hint { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+.admin-tag-badge {
+  display: inline-block;
+  background: var(--accent-orange);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.admin-ticket-list { display: flex; flex-direction: column; gap: 12px; }
+
+.admin-ticket {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+
+.admin-ticket--active { border-color: rgba(255, 140, 0, 0.4); box-shadow: var(--shadow-glow); }
+.admin-ticket--locked { opacity: 0.85; }
+
+.admin-ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-color);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-ticket-amount { font-size: 1.25rem; font-weight: 800; color: var(--accent-gold); display: block; margin-bottom: 6px; }
+.admin-ticket-date { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+
+.ticket-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+.ticket-badge.assigned { background: rgba(0, 230, 118, 0.15); color: var(--accent-green); }
+.ticket-badge.claimed { background: rgba(255, 140, 0, 0.15); color: var(--accent-orange); }
+.ticket-badge.locked { background: rgba(148, 163, 184, 0.15); color: var(--text-secondary); }
+.ticket-badge.open { background: rgba(0, 180, 255, 0.15); color: var(--accent-blue); }
+
+.admin-ticket-body { padding: 1rem 1.25rem; }
+.admin-ticket-body.locked-body { color: var(--text-secondary); font-size: 0.9rem; }
+.admin-ticket-body.locked-body p { margin-bottom: 0.75rem; }
+
+.admin-ticket-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.admin-ticket-row span { color: var(--text-muted); }
+
+.admin-ticket-message {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 140, 0, 0.08);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-orange);
+}
+.admin-ticket-message span { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
+.admin-ticket-message p { margin: 0; font-size: 0.95rem; }
+
+.admin-ticket-proof { margin-top: 0.75rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.admin-ticket-actions { padding: 0.75rem 1.25rem 1.25rem; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* PIX box no depósito */
+.pix-box {
+  display: none;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.12), rgba(212, 175, 55, 0.08));
+  border: 1px solid rgba(255, 140, 0, 0.35);
+  border-radius: var(--radius-sm);
+}
+.pix-box.active { display: block; }
+
+.pix-box-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; font-weight: 600; }
+.pix-type-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.pix-key-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.pix-key-value {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  word-break: break-all;
+  color: var(--accent-gold);
+}
+.pix-hint { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+
 .admin-table {
   width: 100%;
   border-collapse: collapse;

@@ -16,7 +16,12 @@ const App = {
     if (topBalance && wallet) topBalance.textContent = Utils.formatCurrency(available);
 
     const nameEl = document.getElementById('sidebar-username');
-    if (nameEl) nameEl.textContent = profile?.display_name || user.email;
+    if (nameEl) {
+      const label = profile?.is_admin && profile?.admin_nick
+        ? `[ADM-${profile.admin_nick}] ${profile.display_name}`
+        : (profile?.display_name || user.email);
+      nameEl.textContent = label;
+    }
 
     const adminLink = document.getElementById('admin-nav-link');
     if (adminLink) adminLink.style.display = profile?.is_admin ? 'flex' : 'none';
@@ -103,7 +108,7 @@ const App = {
     Wallet.renderWalletCard(wallet);
     const transactions = await Wallet.loadTransactions(user.id);
     Wallet.renderTransactions(transactions);
-    Wallet.initDepositForm(user.id);
+    await Wallet.initDepositForm(user.id);
   },
 
   async initChallenges(user) {

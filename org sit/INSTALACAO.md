@@ -31,7 +31,17 @@ Plataforma de apostas organizadas de Free Fire com **Casa Segura**, carteira vir
    - `profiles`, `wallets`, `transactions`, `challenges`
    - `matchmaking_queue`, `proofs`, `disputes`, `deposit_requests`
 
-### 1.3 Obter credenciais
+### 1.3 Migração do painel admin (banco já existente)
+
+Se você já executou o `schema.sql` antes desta atualização, rode também:
+
+```sql
+-- Conteúdo completo em supabase/migration_admin_panel.sql
+```
+
+Isso adiciona: nick de ADM, chave PIX, escolha de ADM no depósito e sistema de assumir análise.
+
+### 1.4 Obter credenciais
 
 1. Vá em **Project Settings** → **API**
 2. Copie:
@@ -67,6 +77,12 @@ WHERE id = (
   SELECT id FROM auth.users WHERE email = 'seu@email.com'
 );
 ```
+
+Depois, acesse **Admin → Meu Perfil ADM** no site e cadastre:
+- **Nick de ADM** (ex: `ZéPix` → aparece como `[ADM-ZéPix]`)
+- **Chave PIX** e tipo da chave
+
+Sem isso, o ADM não aparece na lista de depósitos dos jogadores.
 
 ---
 

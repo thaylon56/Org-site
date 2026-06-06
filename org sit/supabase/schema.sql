@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   ff_id TEXT,
   avatar_url TEXT,
   is_admin BOOLEAN DEFAULT FALSE,
+  admin_nick TEXT,
+  pix_key TEXT,
+  pix_key_type TEXT DEFAULT 'random',
   -- Estatísticas de confiança
   matches_played INTEGER DEFAULT 0,
   wins INTEGER DEFAULT 0,
@@ -164,6 +167,7 @@ CREATE TABLE IF NOT EXISTS public.disputes (
   status dispute_status DEFAULT 'pending',
   admin_notes TEXT,
   resolved_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  claimed_by_admin_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
   resolved_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -171,13 +175,17 @@ CREATE TABLE IF NOT EXISTS public.disputes (
 -- ============================================================
 -- TABELA: deposit_requests (solicitações de depósito)
 -- ============================================================
-CREATE TYPE deposit_status AS ENUM ('pending', 'approved', 'rejected');
+CREATE TYPE deposit_status AS ENUM ('pending', 'in_review', 'approved', 'rejected');
 
 CREATE TABLE IF NOT EXISTS public.deposit_requests (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
   amount NUMERIC(12,2) NOT NULL CHECK (amount > 0),
+  assigned_admin_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  claimed_by_admin_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
   pix_proof_url TEXT,
+  proof_storage_path TEXT,
+  player_message TEXT,
   status deposit_status DEFAULT 'pending',
   admin_notes TEXT,
   processed_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,

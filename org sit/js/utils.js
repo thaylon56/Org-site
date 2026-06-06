@@ -93,6 +93,7 @@ const Utils = {
       cancelled: 'Cancelado',
       searching: 'Procurando...',
       pending: 'Pendente',
+      in_review: 'Em análise',
       approved: 'Aprovado',
       rejected: 'Rejeitado'
     };
@@ -139,5 +140,27 @@ const Utils = {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  },
+
+  formatAdminTag(profile) {
+    if (!profile) return '';
+    const nick = profile.admin_nick;
+    const name = profile.display_name || '';
+    if (nick) return `[ADM-${nick}] ${name}`;
+    return name;
+  },
+
+  pixTypeLabel(type) {
+    const labels = { cpf: 'CPF', email: 'E-mail', phone: 'Telefone', random: 'Chave aleatória' };
+    return labels[type] || 'PIX';
+  },
+
+  async copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      this.showToast('Copiado!', 'success');
+    } catch {
+      this.showToast('Não foi possível copiar', 'error');
+    }
   }
 };
