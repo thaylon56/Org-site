@@ -112,7 +112,9 @@ const Matchmaking = {
 
     this.subscribeMatchmaking(userId, (challengeId) => {
       Utils.showToast('Adversário encontrado!', 'success');
-      setTimeout(() => window.location.href = `challenges.html#${challengeId}`, 1500);
+      const sb = getSupabase();
+      await sb.rpc('create_challenge_chat', { p_challenge_id: challengeId });
+      setTimeout(() => window.location.href = `challenge-chat.html?challenge=${challengeId}`, 1500);
     });
 
     if (form) {
@@ -127,7 +129,9 @@ const Matchmaking = {
 
           if (result.matched) {
             Utils.showToast('Match encontrado!', 'success');
-            window.location.href = `challenges.html#${result.challengeId}`;
+            const sb = getSupabase();
+            await sb.rpc('create_challenge_chat', { p_challenge_id: result.challengeId });
+            window.location.href = `challenge-chat.html?challenge=${result.challengeId}`;
           } else {
             this.renderSearchUI(true);
             document.getElementById('cancel-search-btn')?.addEventListener('click', async () => {

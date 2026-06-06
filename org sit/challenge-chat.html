@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sala da Partida - Paraíba Apostas</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="chat">
+  <div id="app-root" data-title="Sala da Partida" data-subtitle="Chat com ADM e oponente até o fim da partida"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div class="chat-layout">
+      <div class="card chat-header-card" id="chat-header"></div>
+
+      <div class="card chat-main-card">
+        <div id="chat-messages" class="chat-messages"></div>
+        <form id="chat-form" class="chat-input-row">
+          <input type="text" id="chat-input" class="form-control" placeholder="Digite sua mensagem..." autocomplete="off" maxlength="500">
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+
+      <div class="card chat-actions-card">
+        <div class="card-header" style="margin-bottom:0.75rem;padding-bottom:0.75rem;">
+          <span class="card-title">Ações</span>
+        </div>
+        <div id="chat-actions" class="chat-actions-wrap"></div>
+        <p class="chat-discord-hint">
+          Análises sem ADM disponível vão para o
+          <a href="https://discord.gg/2qy5EpXq" target="_blank" rel="noopener">Discord PARAÍBA | SALAS 5c</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

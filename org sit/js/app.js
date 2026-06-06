@@ -78,7 +78,11 @@ const App = {
       case 'stats': Stats.renderStats(profile); break;
       case 'ranking': Ranking.init(); break;
       case 'proofs': Proofs.init(user.id); break;
-      case 'admin': await Admin.init(user.id); break;
+      case 'admin':
+        await Admin.init(user.id);
+        if (profile?.is_admin) Presence.initAdminToggle();
+        break;
+      case 'chat': await Chat.init(user.id, profile); break;
     }
   },
 

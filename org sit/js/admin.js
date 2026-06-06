@@ -138,6 +138,64 @@ const Admin = {
     return data;
   },
 
+  async loadActiveChatRooms(adminId) {
+    const sb = getSupabase();
+    const { data } = await sb
+      .from('chat_rooms')
+      .select(`
+        *,
+        challenge:challenges(bet_amount, game_mode, creator_id, acceptor_id,
+          creator:profiles!challenges_creator_id_fkey(display_name),
+          acceptor:profiles!challenges_acceptor_id_fkey(display_name)
+        )
+      `)
+      .in('status', ['waiting_admin', 'waiting_room', 'active', 'awaiting_proof'])
+      .order('created_at', { ascending: false });
+    return data || [];
+  },
+
+  renderActiveChats(rooms, adminId, containerId = 'admin-active-chats') {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    if (!rooms.length) {
+      el.innerHTML = '<p class="empty-state">Nenhuma sala ativa no momento.</p>';
+      return;
+    }
+
+    const statusLabels = {
+      waiting_admin: '⏳ Sem ADM',
+      waiting_room: '🛡️ Criar sala FF',
+      active: '🎮 Em jogo',
+      awaiting_proof: '📸 Provas'
+    };
+
+    el.innerHTML = rooms.map(r => {
+      const c = r.challenge;
+      const isMine = r.assigned_admin_id === adminId || !r.assigned_admin_id;
+      return `
+        <div class="admin-ticket admin-ticket--active">
+          <div class="admin-ticket-header">
+            <div>
+              <span class="admin-ticket-amount">${c?.game_mode} · ${Utils.formatCurrency(c?.bet_amount || 0)}</span>
+              <span class="ticket-badge ${isMine ? 'assigned' : 'locked'}">${statusLabels[r.status] || r.status}</span>
+            </div>
+          </div>
+          <div class="admin-ticket-body">
+            <div class="admin-ticket-row">
+              <span>Jogadores</span>
+              <strong>${Utils.escapeHtml(c?.creator?.display_name || '')} vs ${Utils.escapeHtml(c?.acceptor?.display_name || '')}</strong>
+            </div>
+            ${r.room_code ? `<div class="admin-ticket-row"><span>Sala FF</span><strong>${Utils.escapeHtml(r.room_code)}</strong></div>` : ''}
+          </div>
+          <div class="admin-ticket-actions">
+            <a href="challenge-chat.html?challenge=${r.challenge_id}" class="btn btn-primary btn-sm">Abrir chat</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+  },
+
   async loadAllUsers() {
     const sb = getSupabase();
     const { data } = await sb
@@ -500,16 +558,26 @@ const Admin = {
     const stats = await this.loadDashboardStats(adminId);
     this.renderAdminStats(stats);
 
-    const [deposits, disputes, users] = await Promise.all([
+    const [deposits, disputes, users, chats] = await Promise.all([
       this.loadDeposits(adminId),
       this.loadDisputes(adminId),
-      this.loadAllUsers()
+      this.loadAllUsers(),
+      this.loadActiveChatRooms(adminId)
     ]);
 
     await this.renderDeposits(deposits, adminId);
     this.renderDisputes(disputes, adminId);
     this.renderUsers(users);
+    this.renderActiveChats(chats, adminId);
 
     this.subscribeRealtime();
+
+    const sb = getSupabase();
+    sb.channel('admin-chats')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'chat_rooms' }, async () => {
+        const updated = await this.loadActiveChatRooms(adminId);
+        this.renderActiveChats(updated, adminId);
+      })
+      .subscribe();
   }
 };

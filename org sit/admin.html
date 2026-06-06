@@ -1,79 +1,89 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Paraíba Apostas</title>
-  <link rel="icon" href="assets/logo.png" type="image/png">
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body data-page="admin">
-  <div id="app-root" data-title="Painel Administrativo" data-subtitle="Central de análises — depósitos e disputas"></div>
-
-  <div id="page-content-template" style="display:none">
-    <div id="admin-stats" class="admin-stats"></div>
-
-    <div class="admin-tabs">
-      <button class="admin-tab active" data-admin-tab="profile">🛡️ Meu Perfil ADM</button>
-      <button class="admin-tab" data-admin-tab="deposits">💰 Depósitos</button>
-      <button class="admin-tab" data-admin-tab="disputes">⚠️ Disputas</button>
-      <button class="admin-tab" data-admin-tab="users">👥 Usuários</button>
-    </div>
-
-    <div id="panel-profile" class="admin-panel active">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Configurar Perfil de Administrador</span>
-        </div>
-        <p class="text-muted" style="margin-bottom:1.25rem;font-size:0.9rem;">
-          Cadastre seu <strong>nick de ADM</strong> e <strong>chave PIX</strong> para aparecer na lista de depósitos dos jogadores.
-          Seu nick será exibido como <span class="admin-tag-badge">[ADM-SeuNick]</span>
-        </p>
-        <div id="admin-profile-form"></div>
-      </div>
-    </div>
-
-    <div id="panel-deposits" class="admin-panel">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Central de Depósitos</span>
-        </div>
-        <p class="text-muted admin-panel-hint">
-          Todos os ADMs veem os depósitos pendentes. Apenas o ADM escolhido pelo jogador ou quem <strong>assumir a análise</strong> pode ver comprovante e mensagem.
-        </p>
-        <div id="admin-deposits" class="admin-ticket-list"></div>
-      </div>
-    </div>
-
-    <div id="panel-disputes" class="admin-panel">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Central de Disputas</span>
-        </div>
-        <p class="text-muted admin-panel-hint">
-          Todas as disputas aparecem aqui. Assuma a análise para ver detalhes, provas e resolver.
-        </p>
-        <div id="admin-disputes" class="admin-ticket-list"></div>
-      </div>
-    </div>
-
-    <div id="panel-users" class="admin-panel">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Usuários Registrados</span>
-        </div>
-        <div id="admin-users" style="overflow-x:auto;"></div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/config.js"></script>
-  <script src="js/supabase-client.js"></script>
-  <script src="js/utils.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
-  <script src="js/layout.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Paraíba Apostas</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="admin">
+  <div id="app-root" data-title="Painel Administrativo" data-subtitle="Central de análises — salas, depósitos e disputas"></div>
+
+  <div id="page-content-template" style="display:none">
+    <div id="admin-stats" class="admin-stats"></div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-admin-tab="profile">🛡️ Meu Perfil ADM</button>
+      <button class="admin-tab" data-admin-tab="chats">💬 Salas Ativas</button>
+      <button class="admin-tab" data-admin-tab="deposits">💰 Depósitos</button>
+      <button class="admin-tab" data-admin-tab="disputes">⚠️ Disputas</button>
+      <button class="admin-tab" data-admin-tab="users">👥 Usuários</button>
+    </div>
+
+    <div id="panel-profile" class="admin-panel active">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Configurar Perfil de Administrador</span>
+        </div>
+        <div id="admin-online-toggle" style="margin-bottom:1.25rem;"></div>
+        <p class="text-muted" style="margin-bottom:1.25rem;font-size:0.9rem;">
+          Cadastre seu <strong>nick de ADM</strong> e <strong>chave PIX</strong>.
+          Fique <strong>online</strong> para ser puxado automaticamente nas salas de partida.
+        </p>
+        <div id="admin-profile-form"></div>
+      </div>
+    </div>
+
+    <div id="panel-chats" class="admin-panel">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Salas de Partida</span>
+        </div>
+        <p class="text-muted admin-panel-hint">
+          Quando um desafio é aceito, uma sala abre e um ADM online é notificado.
+          Publique o código da sala FF no chat para os jogadores entrarem.
+        </p>
+        <div id="admin-active-chats" class="admin-ticket-list"></div>
+      </div>
+    </div>
+
+    <div id="panel-deposits" class="admin-panel">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Central de Depósitos</span>
+        </div>
+        <div id="admin-deposits" class="admin-ticket-list"></div>
+      </div>
+    </div>
+
+    <div id="panel-disputes" class="admin-panel">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Central de Disputas</span>
+        </div>
+        <div id="admin-disputes" class="admin-ticket-list"></div>
+      </div>
+    </div>
+
+    <div id="panel-users" class="admin-panel">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Usuários Registrados</span>
+        </div>
+        <div id="admin-users" style="overflow-x:auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/presence.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

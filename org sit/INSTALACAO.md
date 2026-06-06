@@ -31,7 +31,14 @@ Plataforma de apostas organizadas de Free Fire com **Casa Segura**, carteira vir
    - `profiles`, `wallets`, `transactions`, `challenges`
    - `matchmaking_queue`, `proofs`, `disputes`, `deposit_requests`
 
-### 1.3 Migração do painel admin (banco já existente)
+### 1.3 Migração do sistema de chat (salas + ADM online)
+
+Execute também `supabase/migration_chat_system.sql` para:
+- Salas de conversa ao aceitar desafio
+- Presença online dos ADMs
+- Pedidos de análise → Discord
+
+### 1.4 Migração do painel admin (banco já existente)
 
 Se você já executou o `schema.sql` antes desta atualização, rode também:
 
@@ -41,7 +48,7 @@ Se você já executou o `schema.sql` antes desta atualização, rode também:
 
 Isso adiciona: nick de ADM, chave PIX, escolha de ADM no depósito e sistema de assumir análise.
 
-### 1.4 Obter credenciais
+### 1.5 Obter credenciais
 
 1. Vá em **Project Settings** → **API**
 2. Copie:
@@ -270,7 +277,24 @@ Para milhares de usuários simultâneos:
 
 ---
 
-## 10. Solução de Problemas
+## 10. Bot Discord (análises automáticas)
+
+Discord da org: [PARAÍBA | SALAS 5c](https://discord.gg/2qy5EpXq)
+
+1. Crie um bot em [discord.com/developers](https://discord.com/developers/applications)
+2. Convide o bot para seu servidor com permissão de enviar mensagens
+3. Copie o **Channel ID** do canal de análises
+4. Na pasta `discord-bot/`:
+   ```bash
+   cp .env.example .env
+   npm install
+   npm start
+   ```
+5. Use a **service_role key** do Supabase (apenas no servidor do bot, nunca no site)
+
+O bot verifica a cada 30s análises sem ADM e posta automaticamente no canal.
+
+## 11. Solução de Problemas
 
 | Problema | Solução |
 |----------|---------|

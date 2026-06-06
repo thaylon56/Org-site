@@ -1,0 +1,14 @@
+{
+  "name": "paraiba-apostas-discord-bot",
+  "version": "1.0.0",
+  "description": "Bot que anuncia análises pendentes no Discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "discord.js": "^14.16.0",
+    "dotenv": "^16.4.0"
+  }
+}

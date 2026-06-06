@@ -99,6 +99,8 @@ const Challenges = {
       challenge_id: challengeId
     });
 
+    await sb.rpc('create_challenge_chat', { p_challenge_id: challengeId });
+
     return data;
   },
 
@@ -188,14 +190,8 @@ const Challenges = {
     if (challenge.status === 'open' && !isCreator) {
       actions = `<button class="btn btn-primary btn-sm" onclick="Challenges.handleAccept('${challenge.id}')">Aceitar Desafio</button>`;
     }
-    if (challenge.status === 'matched' && isParticipant) {
-      actions += `<button class="btn btn-success btn-sm" onclick="Challenges.handleConfirm('${challenge.id}')">Confirmar Pronto</button>`;
-    }
-    if (['in_progress', 'awaiting_result'].includes(challenge.status) && isParticipant) {
-      actions += `
-        <button class="btn btn-success btn-sm" onclick="Challenges.handleResult('${challenge.id}', 'win')">Declarei Vitória</button>
-        <button class="btn btn-danger btn-sm" onclick="Challenges.handleResult('${challenge.id}', 'loss')">Declarei Derrota</button>
-      `;
+    if (['matched', 'in_progress', 'awaiting_result', 'disputed'].includes(challenge.status) && isParticipant) {
+      actions += `<a href="challenge-chat.html?challenge=${challenge.id}" class="btn btn-primary btn-sm">💬 Entrar na Sala</a>`;
     }
     if (['open', 'matched'].includes(challenge.status) && isParticipant) {
       actions += `<button class="btn btn-ghost btn-sm" onclick="Challenges.handleCancel('${challenge.id}')">Cancelar</button>`;
@@ -249,8 +245,8 @@ const Challenges = {
       Utils.showLoading(true);
       const user = await Auth.getCurrentUser();
       await this.acceptChallenge(id, user.id);
-      Utils.showToast('Desafio aceito! Confirme quando estiver pronto.', 'success');
-      window.location.reload();
+      Utils.showToast('Desafio aceito! Entrando na sala...', 'success');
+      window.location.href = `challenge-chat.html?challenge=${id}`;
     } catch (err) {
       Utils.showToast(err.message, 'error');
     } finally {
